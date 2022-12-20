@@ -1,6 +1,7 @@
 import { Entity } from "./Entity.js"
 import { loadImage } from "./helpers.js"
 import SpriteSheet from "./SpriteSheet.js"
+import { Go } from "./traits/Go.js"
 
 
 export async function createPlayer(){
@@ -14,6 +15,8 @@ export async function createPlayer(){
        playerSprite.draw("player",this.pos.x,this.pos.y,context)
        
     }
+
+    player.addTrait(new Go("Go"))
 
     return player
 

@@ -22,6 +22,11 @@ export class Entity {
         this.traits = []
     }
 
+    addTrait(trait){
+        this.traits.push(trait)
+        this[trait.NAME] = trait
+    }
+
     update(deltaTime){
         this.traits.forEach(trait => {
             trait.update(this,deltaTime)

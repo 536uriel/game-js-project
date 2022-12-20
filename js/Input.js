@@ -12,6 +12,9 @@ export class Input {
 
         (["keyup", "keydown"]).forEach(key => {
             addEventListener(key, (event) => {
+
+                event.preventDefault()
+
                 if (event.type == "keydown") {
                     this.keyStatus = 1
                 }
@@ -30,7 +33,7 @@ export class Input {
                     this.keyMap.get(keyName)(this.keyStatus)
                 }
 
-
+              
             })
         })
     }
