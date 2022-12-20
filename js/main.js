@@ -4,6 +4,16 @@ import { createBckgroundLayer, createSpriteLayer } from "./layers.js"
 import Timer from "./timer.js"
 import { setUpMouseControl } from "./debug.js"
 import { createTiles, Level } from "./Level.js"
+import { Input } from "./input.js"
+
+const input = new Input()
+input.addKey("p",(keyStatus)=>{
+    console.log(keyStatus)
+})
+
+input.addKey("p",(keyStatus)=>{
+    console.log("p")
+})
 
 const level_1 = {
     "spriteSheet": "overworld",

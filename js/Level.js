@@ -67,8 +67,6 @@ export class Level {
             //to not pass the tiles
             this.tileCollider.checkY(entity);
 
-            entity.vel.y += 100 * deltaTime;
-
         });
 
         this.totalTime += deltaTime;
