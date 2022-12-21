@@ -67,6 +67,7 @@ export class Level {
             //to not pass the tiles
             this.tileCollider.checkY(entity);
 
+            //gravity
             entity.vel.y += 100 * deltaTime;
 
         });

@@ -34,6 +34,8 @@ export class Entity {
     }
 
     obstruct(side){
-
+        this.traits.forEach(trait => {
+            trait.obstruct(this, side);
+        });
     }
 }

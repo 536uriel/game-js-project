@@ -117,7 +117,7 @@ async function setup() {
 
     input.addKey("d",(keyStatus)=>{
         if(keyStatus == 1){
-            player.Go.direction = 100
+            player.Go.direction = 20
         }
         if(keyStatus == 0){
             player.Go.direction = 0
@@ -127,11 +127,17 @@ async function setup() {
 
     input.addKey("a",(keyStatus)=>{
         if(keyStatus == 1){
-            player.Go.direction = -100
+            player.Go.direction = -20
         }
         if(keyStatus == 0){
             player.Go.direction = 0
 
+        }
+    })
+
+    input.addKey("p",(keyStatus)=>{
+        if(keyStatus == 1){
+            player.Jump.start()
         }
     })
 
