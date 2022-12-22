@@ -95,7 +95,7 @@ export default class TileCollider {
                     //stop the falling
                     entity.vel.y = 0;
 
-                    entity.obstruct(Sides.BOTTOM)
+                    entity.obstruct("bottom")
 
                 }
                 //if mario is jumpping
@@ -108,7 +108,7 @@ export default class TileCollider {
                     entity.vel.y = 0;
 
                     //check if the entity is tuching the ceilling
-                    entity.obstruct(Sides.TOP)
+                    entity.obstruct("top")
                 }
             }
 

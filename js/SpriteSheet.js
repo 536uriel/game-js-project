@@ -7,18 +7,29 @@ export default class SpriteSheet{
     }
 
     define(img,name){
-        const buffer = document.createElement("canvas")
-        buffer.width = this.width
-        buffer.height = this.height
-        buffer.getContext("2d")
-        .drawImage(img,0,0,this.width,this.height)
+        const buffers = ([true,false]).map(flip => {
+            const buffer = document.createElement("canvas")
+            buffer.width = this.width
+            buffer.height = this.height
+            const context = buffer.getContext("2d")
 
-        this.tiles.set(name,buffer)
+            if (flip) {
+                context.scale(-1, 1);
+                context.translate(-this.width, 0);
+            }
+            
+            context.drawImage(img,0,0,this.width,this.height)
+
+            return buffer
+        })
+      
+
+        this.tiles.set(name,buffers)
 
     }
 
-    draw(name,x,y,context){
-        const buffer = this.tiles.get(name)
+    draw(name,x,y,context,flip = false){
+        const buffer = this.tiles.get(name)[flip ? 1 : 0]
         context.drawImage(buffer,x,y)
     }
 }

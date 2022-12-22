@@ -7,19 +7,24 @@ export class Jump extends Trait {
         //in secs
         this.duration = 2
         this.startJump = 0
+        this.falling = false
     }
 
     start(){
         this.startJump = this.duration
+        this.falling = true
     }
 
     cancel(){
         this.startJump = 0
+        this.falling = false
     }
 
     obstruct(entity,side){
+   
         if(side == "top"){
             this.startJump = -1
+
         }
         if(side == "bottom"){
             this.cancel()
