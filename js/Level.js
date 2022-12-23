@@ -68,7 +68,7 @@ export class Level {
             this.tileCollider.checkY(entity);
 
             //gravity
-            entity.vel.y += 100 * deltaTime;
+            entity.vel.y += 10
 
         });
 

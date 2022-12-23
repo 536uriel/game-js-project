@@ -6,7 +6,6 @@ import { setUpMouseControl } from "./debug.js"
 import { createTiles, Level } from "./Level.js"
 import { Input } from "./input.js"
 
-const input = new Input()
 
 
 const level_1 = {
@@ -115,31 +114,10 @@ async function setup() {
 
     const player = await createPlayer()
 
-    input.addKey("d",(keyStatus)=>{
-        if(keyStatus == 1){
-            player.Go.direction = 20
-        }
-        if(keyStatus == 0){
-            player.Go.direction = 0
 
-        }
-    })
+    const input = new Input()
 
-    input.addKey("a",(keyStatus)=>{
-        if(keyStatus == 1){
-            player.Go.direction = -20
-        }
-        if(keyStatus == 0){
-            player.Go.direction = 0
-
-        }
-    })
-
-    input.addKey("p",(keyStatus)=>{
-        if(keyStatus == 1){
-            player.Jump.start()
-        }
-    })
+    input.setupPlayer(player)
 
     setUpMouseControl(canvas,player)
 

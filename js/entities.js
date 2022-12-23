@@ -41,14 +41,14 @@ export async function createPlayer(){
     function routeFrame(character) {
         const runAnim = createAnim(['run-1','run-2','run-3'],8)
         
-        //stands for skip the first jumpping frame
         if (character.Jump.falling) {
             return 'jump';
+            
         }
 
         if (character.Go.direction != 0) {
 
-            //divide the frames between distance
+            //divide the frames between the distance
             return runAnim(Math.abs(character.pos.x));
         }
         return "idle";
