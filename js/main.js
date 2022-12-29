@@ -5,7 +5,8 @@ import Timer from "./timer.js"
 import { setUpMouseControl } from "./debug.js"
 import { createTiles, Level } from "./Level.js"
 import { Input } from "./input.js"
-
+import { Vec2 } from "./math.js"
+import TileResolver from "./TileResolver.js"
 
 
 const level_1 = {
@@ -111,15 +112,18 @@ async function setup() {
     const canvas = document.getElementById("screen")
     const context = canvas.getContext("2d")
     const timer = new Timer(1/60)
+    const camera = new Vec2(0,0)
+    camera.size = TileResolver.tileSize * TileResolver.screenWidthIndex
+    camera.middle = camera.size / 2
 
     const player = await createPlayer()
 
 
     const input = new Input()
 
-    input.setupPlayer(player)
+    input.setupPlayer(player,camera)
 
-    setUpMouseControl(canvas,player)
+    setUpMouseControl(canvas,player,camera)
 
     const level = new Level()
     level.entities.push(player)
@@ -128,8 +132,8 @@ async function setup() {
 
 
  
-    const spriteLayer = createSpriteLayer(level.entities)
-    const bglayer = createBckgroundLayer(level)
+    const spriteLayer = createSpriteLayer(level.entities,camera)
+    const bglayer = createBckgroundLayer(level,camera)
 
 
     const comp = new Compositor()
@@ -137,8 +141,8 @@ async function setup() {
     comp.add(spriteLayer)
 
 
-
     timer.update = () => {
+        player.updateCamera(camera)
         level.update(1/60)
         comp.draw(context)
     }

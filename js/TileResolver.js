@@ -1,14 +1,14 @@
 export default class TileResolver {
     constructor(matrix, tileSize = 40) {
         this.matrix = matrix;
-        this.screenWidthIndex = 15;
-        this.screenHeightIndex = 15;
         let Maincanvas = document.getElementById("screen");
-        this.tileSize = parseInt(Maincanvas.height / this.screenHeightIndex) || tileSize
+        this.tileSize = parseInt(Maincanvas.height / TileResolver.screenHeightIndex) || tileSize
 
     }
 
     static tileSize = parseInt(document.getElementById("screen").height / 15) || 40
+    static screenWidthIndex = 15;
+    static screenHeightIndex = 15;
 
     //take the actual pixel position and return the index of the grid
     toIndex(pos) {

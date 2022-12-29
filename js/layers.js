@@ -13,33 +13,52 @@ export function createBufferImageColor(color) {
 
 }
 
-export function createBckgroundLayer(level) {
+export function createBckgroundLayer(level, camera) {
     const backgroundSprite = new SpriteSheet()
     const blueBuffer = createBufferImageColor("blue")
     const brownBuffer = createBufferImageColor("brown")
+    const backgroundBuffer = document.createElement("canvas")
 
-    backgroundSprite.define(blueBuffer,"sky")
+    const tiles = level.tiles
+    const tileCollider = level.tileCollider
+
+    backgroundBuffer.width = level.tiles.grid.length * TileResolver.tileSize
+    backgroundBuffer.height = camera.size
+    const backgroundContext = backgroundBuffer.getContext("2d")
+
+    backgroundSprite.define(blueBuffer, "sky")
     backgroundSprite.define(brownBuffer, "ground")
 
 
-    const tiles = level.tiles
+
 
     return function drawBackground(context) {
-        for (let x = 0; x < tiles.grid.length; x++) {
-            for (let y = 0; y < tiles.grid[x].length; y++) {
-                backgroundSprite.draw(tiles.grid[x][y].name,x * TileResolver.tileSize,y * TileResolver.tileSize,context)
+        const drawFrom = tileCollider.tiles.toIndex(camera.x)
+        const drawTo = drawFrom + tileCollider.tiles.toIndex(camera.size)
+
+        for (let x = drawFrom; x < drawTo; x++) {
+
+            const col = tiles.grid[x]
+            if (col) {
+                col.forEach((tile, y) => {
+                    backgroundSprite.draw(tile.name, x * TileResolver.tileSize, y * TileResolver.tileSize, backgroundContext)
+                })
+
             }
+
         }
-      
+
+        context.drawImage(backgroundBuffer, -camera.x, -camera.y)
+
     }
 }
 
-export function createSpriteLayer(entities){
-    
-    return function redrawSprite(context){
+export function createSpriteLayer(entities, camera) {
+
+    return function redrawSprite(context) {
         entities.forEach(entity => {
-            entity.draw(context)
+            entity.draw(context, camera)
         })
     }
-   
+
 }

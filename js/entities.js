@@ -5,7 +5,7 @@ import { Go } from "./traits/Go.js"
 import { Jump } from "./traits/Jump.js"
 
 
-export async function createPlayer(){
+export async function createPlayer() {
     const idleImg = await loadImage('./img/idle.png')
     const jumpImg = await loadImage('./img/jump.png')
     const run_1Img = await loadImage('./img/run-1.png')
@@ -13,37 +13,36 @@ export async function createPlayer(){
     const run_3Img = await loadImage('./img/run-3.png')
 
     const player = new Entity()
-    player.size.set(64,64)
-    player.pos.set(200,200)
+    player.size.set(64, 64)
+    player.pos.set(200, 200)
 
     player.addTrait(new Go("Go"))
     player.addTrait(new Jump("Jump"))
 
-    const playerSprite = new SpriteSheet(player.size.x,player.size.y)
-   
-    playerSprite.define(idleImg,"idle")
-    playerSprite.define(jumpImg,"jump")
-    playerSprite.define(run_1Img,"run-1")
-    playerSprite.define(run_2Img,"run-2")
-    playerSprite.define(run_3Img,"run-3")
+    const playerSprite = new SpriteSheet(player.size.x, player.size.y)
+
+    playerSprite.define(idleImg, "idle")
+    playerSprite.define(jumpImg, "jump")
+    playerSprite.define(run_1Img, "run-1")
+    playerSprite.define(run_2Img, "run-2")
+    playerSprite.define(run_3Img, "run-3")
 
     function createAnim(frames, frameLen) {
         //charge on what frame sould be displayed
         return function resolveFrame(distance) {
-            console.log(distance)
             const frameIndex = Math.floor(distance / frameLen) % frames.length;
             const frameName = frames[frameIndex];
             return frameName;
         }
     }
 
-     //responsible for what frame of animation should draw
+    //responsible for what frame of animation should draw
     function routeFrame(character) {
-        const runAnim = createAnim(['run-1','run-2','run-3'],8)
-        
+        const runAnim = createAnim(['run-1', 'run-2', 'run-3'], 8)
+
         if (character.Jump.falling) {
             return 'jump';
-            
+
         }
 
         if (character.Go.direction != 0) {
@@ -54,18 +53,29 @@ export async function createPlayer(){
         return "idle";
     }
 
-    player.draw = function(context){
-        if(this.Go.direction > 0) {
-            playerSprite.draw(routeFrame(this),this.pos.x,this.pos.y,context,false)
-        }else{
-            playerSprite.draw(routeFrame(this),this.pos.x,this.pos.y,context,true)
-
+    player.updateCamera = function (camera) {
+        if (this.pos.x >= camera.middle) {
+            camera.x = this.pos.x - camera.middle
         }
 
-       
     }
 
-    
+    let flip = true
+    player.draw = function (context,camera) {
+
+        if (this.Go.direction > 0) {
+            flip = false
+        }
+
+        if (this.Go.direction < 0) {
+            flip = true
+        }
+        playerSprite.draw(routeFrame(this), this.pos.x - camera.x, this.pos.y, context, flip)
+
+
+    }
+
+
 
     return player
 
