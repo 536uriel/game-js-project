@@ -24,12 +24,12 @@ export class Input {
                     this.canPress.set(keyName,true)
                 }
 
-                if (event.key == keyName && this.keyStatus == 1 && this.canPress.get(keyName)) {
+                if (event.key.toUpperCase() == keyName && this.keyStatus == 1 && this.canPress.get(keyName)) {
                    this.keyMap.get(keyName)(this.keyStatus)
                     this.canPress.set(keyName,false)
                 }
 
-                if (event.key == keyName && this.keyStatus == 0 && this.canPress.get(keyName)) {
+                if (event.key.toUpperCase() == keyName && this.keyStatus == 0 && this.canPress.get(keyName)) {
                     this.keyMap.get(keyName)(this.keyStatus)
                 }
 
@@ -41,7 +41,7 @@ export class Input {
 
     setupPlayer(entity){
 
-        this.addKey("d",(keyStatus)=>{
+        this.addKey("D",(keyStatus)=>{
             if(keyStatus == 1){
                 entity.Go.direction = 20
             }
@@ -51,7 +51,7 @@ export class Input {
             }
         })
     
-        this.addKey("a",(keyStatus)=>{
+        this.addKey("A",(keyStatus)=>{
             if(keyStatus == 1){
                 entity.Go.direction = -20
             }
@@ -61,7 +61,7 @@ export class Input {
             }
         })
     
-        this.addKey("p",(keyStatus)=>{
+        this.addKey("P",(keyStatus)=>{
             if(keyStatus == 1 && entity.Jump.falling != true){
                 entity.Jump.start()
             }
