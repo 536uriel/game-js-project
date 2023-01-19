@@ -45,6 +45,8 @@ export class Level {
         this.tiles = new Matrix();
 
         this.tileCollider = new TileCollider(this.tiles);
+        
+        this.gravity = 10;
     }
 
     update(deltaTime) {
@@ -52,6 +54,7 @@ export class Level {
 
         this.entities.forEach(entity => {
             //call the traits update function in all entities
+
             entity.update(deltaTime);
 
             //update the position of the mario object
@@ -68,7 +71,7 @@ export class Level {
             this.tileCollider.checkY(entity);
 
             //gravity
-            entity.vel.y += 10
+            entity.vel.y += this.gravity
 
         });
 

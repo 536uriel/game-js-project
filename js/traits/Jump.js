@@ -3,12 +3,12 @@ import { Trait } from "../Entity.js"
 export class Jump extends Trait {
     constructor(name) {
         super(name)
-        this.velocity = 5
+        this.velocity = 12
         //in secs
-        this.duration = 2
+        this.duration = 1.8
         this.startJump = 0
         this.falling = false
-        this.speed = 2
+        this.fallingSpeed = 2
     }
 
     start(){
@@ -33,8 +33,8 @@ export class Jump extends Trait {
     }
 
     update(entity,deltaTime) {
-        entity.vel.y -=  (this.velocity * this.startJump) * this.speed
-        this.startJump -= deltaTime * this.speed
+        entity.vel.y -=  (this.velocity * this.startJump) 
+        this.startJump -= deltaTime * this.fallingSpeed
 
         if(this.startJump < 0){
             this.falling = true
